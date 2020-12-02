@@ -31,10 +31,7 @@ io.on('connection', socket => {
         } catch (error) { console.log(error) }
     })
 
-    socket.on('mode picked', () => {
-        console.log('mode picked')
-        io.emit('mode picked')
-    })
+    socket.on('mode picked', () => { io.emit('mode picked') })
 
     socket.on('signed', () => {
         activePlayers++
@@ -46,11 +43,8 @@ io.on('connection', socket => {
         console.log('signed!')
     })
 
-    socket.on('check answer', (msg) => {
-        console.log('check answer')
-        socket.broadcast.emit('check answer', msg)
-    })
-
+    socket.on('check answer', (guess) => { socket.broadcast.emit('check answer', guess) })
+    socket.on('right answer', score => socket.broadcast.emit('right answer', score))
 
 
 
