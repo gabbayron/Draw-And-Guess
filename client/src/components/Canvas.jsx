@@ -5,6 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useWindowSize } from '@react-hook/window-size';
 import { UserContext } from '../context/UserContext';
 import { socket } from '../socket/Socket'
+import { useHistory } from 'react-router-dom';
 
 function Canvas({ changeWord, setChangeWord }) {
 
@@ -14,11 +15,12 @@ function Canvas({ changeWord, setChangeWord }) {
     const [color, setColor] = useState('black');
     const [winWidth, winHeight] = useWindowSize();
     const { role } = useContext(UserContext)
-
+    const history = useHistory()
+    
     useEffect(() => {
         const canvas = canvasRef.current;
-        canvas.height = winHeight / 2;
-        canvas.width = winWidth * 0.8;
+        canvas.height = winHeight * 0.4;
+        canvas.width = winWidth * 0.9;
         const context = canvas.getContext("2d");
         context.scale(1, 1);
         context.lineCap = "round";
@@ -97,7 +99,17 @@ function Canvas({ changeWord, setChangeWord }) {
                 />
             </div>
             {role === "draw" ? <> <CirclePicker color={color} onChange={setColor} />
-                <div>
+                <div className="gameButtons">
+
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        style={{ marginTop: "20px" }}
+                        onClick={() => setChangeWord(!changeWord)}
+                    >
+                        Generate New Word
+                    </Button>
+
                     <Button
                         variant="contained"
                         color="secondary"
@@ -105,15 +117,19 @@ function Canvas({ changeWord, setChangeWord }) {
                         style={{ marginTop: "20px" }}
                         onClick={clear}
                     >
-                        Delete
-      </Button>  <Button
+                        Clear Canvas
+                    </Button>
+                    <Button
                         variant="contained"
                         color="secondary"
+                        startIcon={<DeleteIcon />}
                         style={{ marginTop: "20px" }}
-                        onClick={() => setChangeWord(!changeWord)}
+                        onClick={() => history.push('/mode')}
                     >
-                        Change Word
-      </Button> </div> </> : ""}
+                        Change Mode
+                    </Button>
+                </div> </>
+                : ""}
         </>
     );
 }

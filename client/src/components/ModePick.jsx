@@ -27,7 +27,7 @@ const ModePick = ({ setModePicked, setWords }) => {
     }, [mode])
 
     return (
-        <div className="content">
+        <div className="modePick">
             <Typography
                 variant="h4"
                 align="center"
@@ -40,7 +40,7 @@ const ModePick = ({ setModePicked, setWords }) => {
                 color="textSecondary"
                 paragraph>
                 EZ Mode Win - 1 Point <br />
-              Normal Mode Win - 3 Points <br />
+              Medium Mode Win - 3 Points <br />
               Hard Mode Win - 5 Points
             </Typography>
             <div className="levelButtons">
@@ -64,7 +64,7 @@ const ModePick = ({ setModePicked, setWords }) => {
                     color="primary"
                     onClick={e => { setMode('normal') }}
                 >
-                    Normal
+                    Medium
              </Button>
                 <Button
                     style={{ marginTop: "10px" }}

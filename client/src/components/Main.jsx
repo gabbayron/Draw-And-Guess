@@ -7,12 +7,11 @@ import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
 import { socket } from '../socket/Socket'
 
-const Main = ({ gameStatus, modePicked, words, mode }) => {
+const Main = ({ gameStatus, modePicked, words, score, setScore }) => {
     const { role } = useContext(UserContext);
     const [word, setWord] = useState('');
     const [changeWord, setChangeWord] = useState(false);
     const [guess, setGuess] = useState('');
-    const [score, setScore] = useState(0);
     const [difficulty, setDifficulty] = useState('')
     useEffect(() => {
         // Generate random word
@@ -22,7 +21,6 @@ const Main = ({ gameStatus, modePicked, words, mode }) => {
             setDifficulty(words[index].mode)
         }
     }, [changeWord])
-
     useEffect(() => {
         // if (word === "") return;
         socket.on('check answer', guess => {

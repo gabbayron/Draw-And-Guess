@@ -42,8 +42,6 @@ function App() {
     })
   }, [])
 
-
-
   const [fullName, setFullName] = useState('')
   const [nickName, setNickName] = useState('')
   const [role, setRole] = useState('')
@@ -51,16 +49,18 @@ function App() {
   const [modePicked, setModePicked] = useState(false)
   const [words, setWords] = useState([])
   const [mode, setMode] = useState('')
+  const [score, setScore] = useState(0);
+
   return (
     <Router>
       <UserContext.Provider value={{ fullName, nickName, setFullName, setNickName, role }}>
         <ThemeProvider theme={theme}>
-          <Header />
+          <Header gameStatus={gameStatus}/>
           <Redirect to="/sign" />
           <Route exact path="/" ><Redirect to="/sign" /></Route>
           <Route path='/sign' component={() => <SignIn />} />
-          <Route path='/mode' component={() => <ModePick setWords={setWords} setModePicked={setModePicked} mode={mode} setMode={setMode} />} />
-          <Route path='/main' component={() => <Main mode={mode} modePicked={modePicked} gameStatus={gameStatus} words={words} />} />
+          <Route path='/mode' component={() => <ModePick setWords={setWords} setModePicked={setModePicked} />} />
+          <Route path='/main' component={() => <Main score={score} setScore={setScore} modePicked={modePicked} gameStatus={gameStatus} words={words} />} />
         </ThemeProvider>
       </UserContext.Provider>
     </Router>
