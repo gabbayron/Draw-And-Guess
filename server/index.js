@@ -46,16 +46,25 @@ io.on('connection', socket => {
         console.log('signed!')
     })
 
-    socket.on('check answer', msg => {
+    socket.on('check answer', (msg) => {
         console.log('check answer')
-        io.sockets.emit('check answer', msg)
+        socket.broadcast.emit('check answer', msg)
     })
 
-    socket.on('right answer', () => socket.emit('right answer'))
+
+
+
+    // socket.on('check answer', msg => {
+    //     console.log('check answer')
+    //     io.sockets.emit('check answer', msg)
+    // })
+
+    // socket.on('right answer', () => socket.emit('right answer'))
 
     socket.emit('connection', { role: io.engine.clientsCount === 1 ? "draw" : "guess" })
     socket.on('disconnect', () => {
         activePlayers--
+        console.log('active ', activePlayers)
         console.log('user disconnected')
     });
     // -------------- Canvas Events ----------------

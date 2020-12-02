@@ -17,8 +17,6 @@ const Main = ({ gameStatus, modePicked, words }) => {
 
     useEffect(() => {
         // Generate random word
-        socket.on('right answer', console.log('right'))
-
         if (role === "draw") {
             (() => {
                 const index = Math.floor(Math.random() * words.length)
@@ -26,44 +24,44 @@ const Main = ({ gameStatus, modePicked, words }) => {
             })()
         }
     }, [changeWord])
+    useEffect(() => {
+        console.log('use called')
+        socket.on('check answer', guess => {
+            console.log(guess, 'guess')
+            console.log(word, 'word')
+            if (guess === word.toLocaleLowerCase()) {
+                console.log('this is right')
+                setChangeWord(prevState => !prevState)
+            }
+        })
+    }, [])
 
-const handleSubmit = () => {
-    socket.emit('check answer', guess.toLocaleLowerCase())
-}
+    const handleSubmit = () => { socket.emit('check answer', guess) }
 
-
-socket.on('check answer', guess => {
-    if (guess === word.toLocaleLowerCase()) {
-        console.log('this is right')
-        setChangeWord(!changeWord)
-        socket.emit('right answer')
-    }
-})
-
-return (
-    <div className="content">
-        {gameStatus && modePicked ? <>
-            {role === "draw" ? <h2>Draw - {word}</h2> : ""}
-            <h3>Score : {score}</h3>
-            <Canvas changeWord={changeWord} setChangeWord={setChangeWord} socket={socket} /> </> :
-            <><AccessTimeIcon fontSize="large" />
-                <Typography paragraph align="center" variant="h2" >
-                    Waiting For 2nd Player...
+    return (
+        <div className="content">
+            {gameStatus && modePicked ? <>
+                {role === "draw" ? <h2>Draw - {word}</h2> : ""}
+                <h3>Score : {score}</h3>
+                <Canvas changeWord={changeWord} setChangeWord={setChangeWord} socket={socket} /> </> :
+                <><AccessTimeIcon fontSize="large" />
+                    <Typography paragraph align="center" variant="h2" >
+                        Waiting For 2nd Player...
                  </Typography><AccessTimeIcon fontSize="large" /> </>}
-        {role === "guess" && gameStatus && modePicked ? <>
-            <TextField onChange={e => setGuess(e.target.value)} inputRef={inputRef} id="standard-basic" label="Place Your Guess Here !" />
-            <Button
-                onClick={handleSubmit}
-                variant="contained"
-                color="secondary"
-                style={{ marginTop: "20px" }}
-            >
-                Submit Your Answer
+            {role === "guess" && gameStatus && modePicked ? <>
+                <TextField onChange={e => setGuess(e.target.value)} inputRef={inputRef} id="standard-basic" label="Place Your Guess Here !" />
+                <Button
+                    onClick={() => handleSubmit()}
+                    variant="contained"
+                    color="secondary"
+                    style={{ marginTop: "20px" }}
+                >
+                    Submit Your Answer
                  </Button>
-        </> : ""}
+            </> : ""}
 
-    </div>
-);
+        </div>
+    );
 }
 
 export default Main;

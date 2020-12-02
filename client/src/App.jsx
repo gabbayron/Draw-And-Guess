@@ -32,16 +32,17 @@ function App() {
       console.log(msg)
       setRole(msg.role)
     })
+    socket.on('game full', () => {
+      console.log('game full')
+      setGameStatus(true)
+    })
+    socket.on('mode picked', () => {
+      console.log('mode picked')
+      setModePicked(true)
+    })
   }, [])
 
-  socket.on('game full', () => {
-    console.log('game full')
-    setGameStatus(true)
-  })
-  socket.on('mode picked', () => {
-    console.log('mode picked')
-    setModePicked(true)
-  })
+
 
   const [fullName, setFullName] = useState('')
   const [nickName, setNickName] = useState('')

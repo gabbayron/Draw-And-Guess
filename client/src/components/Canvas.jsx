@@ -26,26 +26,32 @@ function Canvas({ changeWord, setChangeWord }) {
         contextRef.current = context;
     }, [winWidth, winHeight])
 
-    socket.on('start draw', ({ x, y }) => {
-        if (!contextRef.current) return;
-        contextRef.current.beginPath();
-        contextRef.current.moveTo(x, y);
-    })
-    socket.on('draw', (data) => {
-        if (!contextRef.current) return
-        contextRef.current.lineTo(data.x, data.y)
-        contextRef.current.strokeStyle = data.color.hex
-        contextRef.current.stroke()
-    })
-    socket.on('finish draw', () => {
-        if (!contextRef.current) return
-        // console.log(contextRef)
-        contextRef.current.closePath()
-    })
-    socket.on('clear', () => {
-        if (!contextRef.current) return
-        contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
-    })
+    useEffect(() => {
+        socket.on('start draw', ({ x, y }) => {
+            if (!contextRef.current) return;
+            contextRef.current.beginPath();
+            contextRef.current.moveTo(x, y);
+        })
+        socket.on('draw', (data) => {
+            if (!contextRef.current) return
+            contextRef.current.lineTo(data.x, data.y)
+            contextRef.current.strokeStyle = data.color.hex
+            contextRef.current.stroke()
+        })
+        socket.on('finish draw', () => {
+            if (!contextRef.current) return
+            // console.log(contextRef)
+            contextRef.current.closePath()
+        })
+        socket.on('clear', () => {
+            if (!contextRef.current) return
+            contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+        })
+        socket.on('right answer', () => {
+            if (!contextRef.current) return
+            contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+        })
+    }, [])
 
     const startDrawing = (e) => {
         if (role === "guess") return
@@ -78,10 +84,7 @@ function Canvas({ changeWord, setChangeWord }) {
         contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
         socket.emit('clear')
     }
-    socket.on('right answer', () => {
-        if (!contextRef.current) return
-        contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
-    })
+
 
     return (
         <>
