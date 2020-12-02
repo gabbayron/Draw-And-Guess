@@ -12,7 +12,7 @@ import { useHistory } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import {socket} from '../socket/Socket'
+import { socket } from '../socket/Socket'
 
 
 
@@ -45,18 +45,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function SignIn() {
 
-    const { role } = useContext(UserContext)
-    const history = useHistory()
+    const { role } = useContext(UserContext);
+    const history = useHistory();
     const classes = useStyles();
-    const { setFullName, setNickName } = useContext(UserContext)
-    const [nick, setNick] = useState('')
-    const [name, setName] = useState('')
+    const { setFullName, setNickName } = useContext(UserContext);
+    const [nick, setNick] = useState('');
+    const [name, setName] = useState('');
     const handleClick = (e) => {
-        setNickName(nick)
-        setFullName(name)
-        socket.emit('signed')
-        if (role === "draw") history.push('/mode')
-        else history.push('/main')
+        setNickName(nick);
+        setFullName(name);
+        socket.emit('signed');
+        if (role === "draw") { history.push('/mode'); }
+        else { history.push('/main'); }
     }
 
     return (
@@ -68,7 +68,7 @@ export default function SignIn() {
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign in
-        </Typography>
+                </Typography>
                 <TextField
                     variant="outlined"
                     margin="normal"

@@ -29,33 +29,32 @@ function App() {
 
   useEffect(() => {
     socket.on('connection', msg => {
-      console.log(msg)
-      setRole(msg.role)
+      console.log(msg);
+      setRole(msg.role);
     })
     socket.on('game full', () => {
-      console.log('game full')
-      setGameStatus(true)
+      console.log('game full');
+      setGameStatus(true);
     })
     socket.on('mode picked', () => {
-      console.log('mode picked')
-      setModePicked(true)
+      console.log('mode picked');
+      setModePicked(true);
     })
   }, [])
 
-  const [fullName, setFullName] = useState('')
-  const [nickName, setNickName] = useState('')
-  const [role, setRole] = useState('')
-  const [gameStatus, setGameStatus] = useState(false)
-  const [modePicked, setModePicked] = useState(false)
-  const [words, setWords] = useState([])
-  const [mode, setMode] = useState('')
+  const [fullName, setFullName] = useState('');
+  const [nickName, setNickName] = useState('');
+  const [role, setRole] = useState('');
+  const [gameStatus, setGameStatus] = useState(false);
+  const [modePicked, setModePicked] = useState(false);
+  const [words, setWords] = useState([]);
   const [score, setScore] = useState(0);
 
   return (
     <Router>
       <UserContext.Provider value={{ fullName, nickName, setFullName, setNickName, role }}>
         <ThemeProvider theme={theme}>
-          <Header gameStatus={gameStatus}/>
+          <Header gameStatus={gameStatus} />
           <Redirect to="/sign" />
           <Route exact path="/" ><Redirect to="/sign" /></Route>
           <Route path='/sign' component={() => <SignIn />} />

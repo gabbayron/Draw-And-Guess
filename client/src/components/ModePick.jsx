@@ -8,20 +8,20 @@ import { useHistory } from 'react-router-dom';
 import { socket } from '../socket/Socket'
 
 const ModePick = ({ setModePicked, setWords }) => {
-    const [mode, setMode] = useState('')
-    const isFirstRender = useRef(true)
-    const history = useHistory()
+    const [mode, setMode] = useState('');
+    const isFirstRender = useRef(true);
+    const history = useHistory();
 
     useEffect(() => {
         if (isFirstRender.current) { return isFirstRender.current = false }
         (async () => {
             try {
-                let res = await fetch('http://localhost:4000/words/' + mode)
-                let data = await res.json()
-                socket.emit('mode picked')
-                setModePicked(true)
-                setWords(data)
-                history.push('/main')
+                let res = await fetch('http://localhost:4000/words/' + mode);
+                let data = await res.json();
+                socket.emit('mode picked');
+                setModePicked(true);
+                setWords(data);
+                history.push('/main');
             } catch (error) { throw error }
         })()
     }, [mode])
@@ -65,7 +65,7 @@ const ModePick = ({ setModePicked, setWords }) => {
                     onClick={e => { setMode('normal') }}
                 >
                     Medium
-             </Button>
+                </Button>
                 <Button
                     style={{ marginTop: "10px" }}
                     className="hard"
@@ -76,7 +76,7 @@ const ModePick = ({ setModePicked, setWords }) => {
                     onClick={e => { setMode('hard') }}
                 >
                     Hard
-             </Button>
+                </Button>
             </div>
         </div>
     );

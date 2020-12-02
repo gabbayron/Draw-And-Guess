@@ -3,7 +3,6 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { UserContext } from '../context/UserContext';
 import Menu from '@material-ui/core/Menu';
@@ -12,9 +11,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
 import Button from '@material-ui/core/Button';
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -88,8 +85,8 @@ export default function Header({ gameStatus }) {
                         size="large"
                         style={{ marginTop: "3px" }}
                     >
-                        Menu
-                     </Button>
+                        <MenuIcon />
+                    </Button>
                     <StyledMenu
                         id="customized-menu"
                         anchorEl={anchorEl}
@@ -113,8 +110,8 @@ export default function Header({ gameStatus }) {
                     </StyledMenu> </> : ""}
                     <Typography variant="h6" className={classes.title}>
                         Draw & Guess
-          </Typography>
-                    <Typography variant="h6" className={classes.title}>
+                    </Typography>
+                    <Typography style={{ marginTop: "3px" }} variant="h6" className={classes.title}>
                         {gameStatus ? `Hello ${nickName}` : ""}
                     </Typography>
                 </Toolbar>

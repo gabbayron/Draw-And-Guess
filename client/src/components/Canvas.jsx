@@ -14,8 +14,8 @@ function Canvas({ changeWord, setChangeWord }) {
     const [isDrawing, setIsDrawing] = useState(false);
     const [color, setColor] = useState('black');
     const [winWidth, winHeight] = useWindowSize();
-    const { role } = useContext(UserContext)
-    const history = useHistory()
+    const { role } = useContext(UserContext);
+    const history = useHistory();
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -35,56 +35,55 @@ function Canvas({ changeWord, setChangeWord }) {
             contextRef.current.moveTo(x, y);
         })
         socket.on('draw', (data) => {
-            if (!contextRef.current) return
-            contextRef.current.lineTo(data.x, data.y)
-            contextRef.current.strokeStyle = data.color.hex
-            contextRef.current.stroke()
+            if (!contextRef.current) return;
+            contextRef.current.lineTo(data.x, data.y);
+            contextRef.current.strokeStyle = data.color.hex;
+            contextRef.current.stroke();
         })
         socket.on('finish draw', () => {
-            if (!contextRef.current) return
-            // console.log(contextRef)
-            contextRef.current.closePath()
+            if (!contextRef.current) return;
+            contextRef.current.closePath();
         })
         socket.on('clear', () => {
-            if (!contextRef.current) return
-            contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+            if (!contextRef.current) return;
+            contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         })
         socket.on('right answer', () => {
-            if (!contextRef.current) return
-            contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+            if (!contextRef.current) return;
+            contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         })
     }, [])
 
     const startDrawing = (e) => {
-        if (role === "guess") return
-        const rect = canvasRef.current.getBoundingClientRect()
-        const touch = e.touches[0]
-        contextRef.current.beginPath()
-        contextRef.current.moveTo(touch.clientX - rect.x, touch.clientY - rect.y)
-        setIsDrawing(true)
-        socket.emit('start draw', ({ x: touch.clientX - rect.x, y: touch.clientY - rect.y }))
+        if (role === "guess") return;
+        const rect = canvasRef.current.getBoundingClientRect();
+        const touch = e.touches[0];
+        contextRef.current.beginPath();
+        contextRef.current.moveTo(touch.clientX - rect.x, touch.clientY - rect.y);
+        setIsDrawing(true);
+        socket.emit('start draw', ({ x: touch.clientX - rect.x, y: touch.clientY - rect.y }));
     }
 
     const draw = (e) => {
-        if (!isDrawing) return
-        if (role === "guess") return
-        const touch = e.touches[0]
-        const rect = canvasRef.current.getBoundingClientRect()
-        contextRef.current.strokeStyle = color.hex
-        contextRef.current.lineTo(touch.clientX - rect.x, touch.clientY - rect.y)
-        contextRef.current.stroke()
-        socket.emit('draw', ({ x: touch.clientX - rect.x, y: touch.clientY - rect.y, color }))
+        if (!isDrawing) return;
+        if (role === "guess") return;
+        const touch = e.touches[0];
+        const rect = canvasRef.current.getBoundingClientRect();
+        contextRef.current.strokeStyle = color.hex;
+        contextRef.current.lineTo(touch.clientX - rect.x, touch.clientY - rect.y);
+        contextRef.current.stroke();
+        socket.emit('draw', ({ x: touch.clientX - rect.x, y: touch.clientY - rect.y, color }));
     }
 
     const finishDrawing = () => {
-        if (role === "guess") return
-        contextRef.current.closePath()
-        setIsDrawing(false)
-        socket.emit('finish draw')
+        if (role === "guess") return;
+        contextRef.current.closePath();
+        setIsDrawing(false);
+        socket.emit('finish draw');
     }
     const clear = () => {
-        contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
-        socket.emit('clear')
+        contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        socket.emit('clear');
     }
 
 

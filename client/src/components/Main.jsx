@@ -12,13 +12,13 @@ const Main = ({ gameStatus, modePicked, words, score, setScore }) => {
     const [word, setWord] = useState('');
     const [changeWord, setChangeWord] = useState(false);
     const [guess, setGuess] = useState('');
-    const [difficulty, setDifficulty] = useState('')
+    const [difficulty, setDifficulty] = useState('');
     useEffect(() => {
         // Generate random word
         if (role === "draw") {
             const index = Math.floor(Math.random() * words.length);
             setWord(words[index].word);
-            setDifficulty(words[index].mode)
+            setDifficulty(words[index].mode);
         }
     }, [changeWord])
     useEffect(() => {
@@ -27,34 +27,32 @@ const Main = ({ gameStatus, modePicked, words, score, setScore }) => {
             if (guess === word.toLocaleLowerCase()) {
                 setChangeWord(prevState => !prevState);
                 if (difficulty === "easy") {
-                    setScore(score + 1)
+                    setScore(score + 1);
                     socket.emit('right answer', score + 1);
                 }
                 else if (difficulty === "normal") {
                     socket.emit('right answer', score + 3);
-                    setScore(score + 3)
+                    setScore(score + 3);
                 }
                 else if (difficulty === "hard") {
                     socket.emit('right answer', score + 5);
-                    setScore(score + 5)
+                    setScore(score + 5);
                 }
             }
         })
         // Clear event listeners
-        return () => {
-            socket.off('check answer')
-        }
+        return () => { socket.off('check answer'); }
     }, [word])
 
     useEffect(() => {
         socket.on('right answer', (score) => {
-            setGuess('')
-            setScore(score)
+            setGuess('');
+            setScore(score);
         })
-        return () => socket.off('right answer')
+        return () => socket.off('right answer');
     }, [])
 
-    const handleSubmit = () => { socket.emit('check answer', guess) }
+    const handleSubmit = () => { socket.emit('check answer', guess); }
 
     return (
         <div className="content">
