@@ -102,11 +102,11 @@ export default function Header({ gameStatus }) {
                             <ListItemIcon>
                                 <DraftsIcon fontSize="small" />
                             </ListItemIcon>
-                            <ListItemText primary="Drafts" />
+                            <ListItemText primary="Log Out" />
                         </StyledMenuItem>
                         <StyledMenuItem>
                             <ListItemIcon>
-                                <InboxIcon fontSize="small" />
+                                <InboxIcon fontSize="New Game" />
                             </ListItemIcon>
                             <ListItemText primary="Inbox" />
                         </StyledMenuItem>
