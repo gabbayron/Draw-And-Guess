@@ -106,9 +106,9 @@ export default function Header({ gameStatus }) {
                         </StyledMenuItem>
                         <StyledMenuItem>
                             <ListItemIcon>
-                                <InboxIcon fontSize="New Game" />
+                                <InboxIcon fontSize="small" />
                             </ListItemIcon>
-                            <ListItemText primary="Inbox" />
+                            <ListItemText primary="New Game" />
                         </StyledMenuItem>
                     </StyledMenu> </> : ""}
                     <Typography variant="h6" className={classes.title}>

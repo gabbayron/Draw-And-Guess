@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
 import React, { useRef, useEffect, useState, useContext } from 'react';
-import { CirclePicker } from 'react-color'
+import { TwitterPicker, HuePicker } from 'react-color'
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useWindowSize } from '@react-hook/window-size';
 import { UserContext } from '../context/UserContext';
@@ -16,7 +16,7 @@ function Canvas({ changeWord, setChangeWord }) {
     const [winWidth, winHeight] = useWindowSize();
     const { role } = useContext(UserContext)
     const history = useHistory()
-    
+
     useEffect(() => {
         const canvas = canvasRef.current;
         canvas.height = winHeight * 0.4;
@@ -98,7 +98,7 @@ function Canvas({ changeWord, setChangeWord }) {
                     ref={canvasRef}
                 />
             </div>
-            {role === "draw" ? <> <CirclePicker color={color} onChange={setColor} />
+            {role === "draw" ? <> <TwitterPicker color={color} onChange={setColor} />
                 <div className="gameButtons">
 
                     <Button
@@ -122,7 +122,6 @@ function Canvas({ changeWord, setChangeWord }) {
                     <Button
                         variant="contained"
                         color="secondary"
-                        startIcon={<DeleteIcon />}
                         style={{ marginTop: "20px" }}
                         onClick={() => history.push('/mode')}
                     >
