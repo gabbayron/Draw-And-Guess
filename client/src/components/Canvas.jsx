@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
 import BackupIcon from '@material-ui/icons/Backup';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const Canvas = ({ changeWord, setChangeWord }) => {
 
@@ -16,8 +17,9 @@ const Canvas = ({ changeWord, setChangeWord }) => {
     const contextRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [color, setColor] = useState('black');
+    const [open, setOpen] = useState(false);
     const [winWidth, winHeight] = useWindowSize();
-    const { role } = useContext(UserContext);
+    const { role, nickName } = useContext(UserContext);
     const history = useHistory();
 
     useEffect(() => {
@@ -29,7 +31,7 @@ const Canvas = ({ changeWord, setChangeWord }) => {
         context.lineCap = "round";
         context.lineWidth = 3;
         contextRef.current = context;
-    }, [winWidth, winHeight])
+    }, [winWidth, winHeight]);
 
     useEffect(() => {
         socket.on('start draw', ({ x, y }) => {
@@ -59,7 +61,7 @@ const Canvas = ({ changeWord, setChangeWord }) => {
             if (!contextRef.current) return;
             contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         })
-    }, [])
+    }, []);
 
     const startDrawing = (e) => {
         if (role === "guess") return;
@@ -69,7 +71,7 @@ const Canvas = ({ changeWord, setChangeWord }) => {
         contextRef.current.moveTo(touch.clientX - rect.x, touch.clientY - rect.y);
         setIsDrawing(true);
         socket.emit('start draw', ({ x: touch.clientX - rect.x, y: touch.clientY - rect.y }));
-    }
+    };
 
     const draw = (e) => {
         if (!isDrawing) return;
@@ -80,19 +82,32 @@ const Canvas = ({ changeWord, setChangeWord }) => {
         contextRef.current.lineTo(touch.clientX - rect.x, touch.clientY - rect.y);
         contextRef.current.stroke();
         socket.emit('draw', ({ x: touch.clientX - rect.x, y: touch.clientY - rect.y, color }));
-    }
+    };
 
     const finishDrawing = () => {
         if (role === "guess") return;
         contextRef.current.closePath();
         setIsDrawing(false);
         socket.emit('finish draw');
-    }
+    };
     const clear = () => {
         contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         socket.emit('clear');
-    }
+    };
 
+    const handleTooltipOpen = () => {
+        setOpen(true);
+        setTimeout(() => { setOpen(false) }, 1500);
+    };
+    const submitScore = async () => {
+        handleTooltipOpen()
+        let rest = await fetch('http://localhost:4000/scores', {
+            method: 'POST',
+            body: JSON.stringify({ user1: nickName, user2: 'test', score: '15' }),
+            headers: { "content-type": "application/json" }
+        })
+        console.log(rest)
+    };
     return (
         <>
             <div className="canvas" style={{ marginBottom: "20px" }}>
@@ -133,14 +148,27 @@ const Canvas = ({ changeWord, setChangeWord }) => {
                     >
                         New Game
                     </Button>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        startIcon={<BackupIcon />}
-                        style={{ marginTop: "20px" }}
+                    <Tooltip
+                        PopperProps={{
+                            disablePortal: true,
+                        }}
+                        open={open}
+                        onClose={() => setOpen(false)}
+                        disableFocusListener
+                        disableHoverListener
+                        disableTouchListener
+                        title="Score Submited"
                     >
-                        Submit Your Score
-                 </Button>
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            startIcon={<BackupIcon />}
+                            style={{ marginTop: "20px" }}
+                            onClick={submitScore}
+                        >
+                            Submit Your Score
+                    </Button>
+                    </Tooltip>
                 </div> </>
                 : ""}
         </>
@@ -148,3 +176,12 @@ const Canvas = ({ changeWord, setChangeWord }) => {
 }
 
 export default Canvas;
+
+<Button
+    variant="contained"
+    color="secondary"
+    startIcon={<BackupIcon />}
+    style={{ marginTop: "20px" }}
+>
+    Submit Your Score
+</Button>

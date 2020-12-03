@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +13,7 @@ import { UserContext } from '../context/UserContext';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { socket } from '../socket/Socket'
+import HighScores from './HighScores';
 
 
 
@@ -32,12 +33,10 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
     },
     avatar: {
-        margin: theme.spacing(1),
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(1),
+        width: '100%',
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
@@ -47,7 +46,7 @@ export default function SignIn() {
 
     const history = useHistory();
     const classes = useStyles();
-    const { setFullName, setNickName ,role} = useContext(UserContext);
+    const { setFullName, setNickName, role } = useContext(UserContext);
     const [nick, setNick] = useState('');
     const [name, setName] = useState('');
     const handleClick = () => {
@@ -58,7 +57,20 @@ export default function SignIn() {
         else { history.push('/main'); }
     }
 
-    return (
+
+    return (<div className="landingPage">
+        <div className={classes.heroContent}>
+            <Container maxWidth="sm" style={{ marginTop: "15px", textAlign: "center" }}>
+                <Typography component="h1" variant="h3" align="center" color="textPrimary" gutterBottom>
+                    Draw & Guess
+          </Typography>
+                <Typography variant="h6" align="center" color="textSecondary" paragraph>
+                    Welcome! <br />
+                    Current Top 3 Scores :
+                </Typography>
+                <HighScores />
+            </Container>
+        </div>
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
@@ -75,6 +87,7 @@ export default function SignIn() {
                     id="fullname"
                     label="Full Name"
                     name="fullName"
+                    placeholder="Full Name"
                     autoComplete="fullname"
                     onChange={e => setName(e.target.value)}
                     value={name}
@@ -93,6 +106,7 @@ export default function SignIn() {
                     fullWidth
                     name="nickname"
                     label="Nick Name"
+                    placeholder="Nick Name"
                     id="nickname"
                     onChange={e => setNick(e.target.value)}
                     value={nick}
@@ -122,5 +136,6 @@ export default function SignIn() {
                 <Copyright />
             </Box>
         </Container>
+    </div>
     );
 }

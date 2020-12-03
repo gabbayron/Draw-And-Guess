@@ -2,6 +2,7 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
       monospace;
   }
+  
   #root{
     height: 100%;
     width: 100%;
@@ -19,9 +20,11 @@ code {
     align-items: center;
     flex-direction: column;
   }
+
   .modePick {
     height: 100%;
   }
+
   .content{
     height: 80%;
     margin : 6% 0;
@@ -37,9 +40,11 @@ code {
   .easy {
     background-color: #64dd17 !important;
   }
+  
   .hard{
     background-color: #d32f2f !important;
   }
+
   .content > h2 , h3{
     margin: 0;
   }
@@ -48,4 +53,8 @@ code {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+  }
+
+  .highScores {
+    text-align: center;
   }
