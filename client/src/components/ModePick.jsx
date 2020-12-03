@@ -7,7 +7,7 @@ import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfie
 import { useHistory } from 'react-router-dom';
 import { socket } from '../socket/Socket'
 
-const ModePick = ({ setModePicked, setWords }) => {
+const ModePick = ({ setModePicked, setWords}) => {
     const [mode, setMode] = useState('');
     const isFirstRender = useRef(true);
     const history = useHistory();

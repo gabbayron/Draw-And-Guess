@@ -7,12 +7,14 @@ import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
 import { socket } from '../socket/Socket'
 
-const Main = ({ gameStatus, modePicked, words, score, setScore }) => {
+const Main = ({ gameStatus, modePicked, words, }) => {
     const { role } = useContext(UserContext);
     const [word, setWord] = useState('');
     const [changeWord, setChangeWord] = useState(false);
     const [guess, setGuess] = useState('');
     const [difficulty, setDifficulty] = useState('');
+    const [score, setScore] = useState(0);
+
     useEffect(() => {
         // Generate random word
         if (role === "draw") {
@@ -22,10 +24,8 @@ const Main = ({ gameStatus, modePicked, words, score, setScore }) => {
         }
     }, [changeWord])
     useEffect(() => {
-        // if (word === "") return;
         socket.on('check answer', guess => {
             if (guess === word.toLocaleLowerCase()) {
-                setChangeWord(prevState => !prevState);
                 if (difficulty === "easy") {
                     setScore(score + 1);
                     socket.emit('right answer', score + 1);
@@ -38,9 +38,9 @@ const Main = ({ gameStatus, modePicked, words, score, setScore }) => {
                     socket.emit('right answer', score + 5);
                     setScore(score + 5);
                 }
+                setChangeWord(prevState => !prevState);
             }
         })
-        // Clear event listeners
         return () => { socket.off('check answer'); }
     }, [word])
 
@@ -49,10 +49,14 @@ const Main = ({ gameStatus, modePicked, words, score, setScore }) => {
             setGuess('');
             setScore(score);
         })
-        return () => socket.off('right answer');
+        socket.on('mode picked', () => setScore(0))
+        return () => {
+            socket.off('right answer');
+            socket.off('mode picked');
+        }
     }, [])
 
-    const handleSubmit = () => { socket.emit('check answer', guess); }
+    const handleGuess = () => { socket.emit('check answer', guess.toLocaleLowerCase()); }
 
     return (
         <div className="content">
@@ -71,7 +75,7 @@ const Main = ({ gameStatus, modePicked, words, score, setScore }) => {
                     id="standard-basic"
                     label="Place Your Guess Here !" />
                 <Button
-                    onClick={() => handleSubmit()}
+                    onClick={() => handleGuess()}
                     variant="contained"
                     color="secondary"
                     style={{ marginTop: "20px" }}

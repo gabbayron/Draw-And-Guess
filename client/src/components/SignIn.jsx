@@ -45,13 +45,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function SignIn() {
 
-    const { role } = useContext(UserContext);
     const history = useHistory();
     const classes = useStyles();
-    const { setFullName, setNickName } = useContext(UserContext);
+    const { setFullName, setNickName ,role} = useContext(UserContext);
     const [nick, setNick] = useState('');
     const [name, setName] = useState('');
-    const handleClick = (e) => {
+    const handleClick = () => {
         setNickName(nick);
         setFullName(name);
         socket.emit('signed');

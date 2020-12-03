@@ -33,11 +33,9 @@ function App() {
       setRole(msg.role);
     })
     socket.on('game full', () => {
-      console.log('game full');
       setGameStatus(true);
     })
     socket.on('mode picked', () => {
-      console.log('mode picked');
       setModePicked(true);
     })
   }, [])
@@ -48,8 +46,7 @@ function App() {
   const [gameStatus, setGameStatus] = useState(false);
   const [modePicked, setModePicked] = useState(false);
   const [words, setWords] = useState([]);
-  const [score, setScore] = useState(0);
-
+  
   return (
     <Router>
       <UserContext.Provider value={{ fullName, nickName, setFullName, setNickName, role }}>
@@ -59,7 +56,7 @@ function App() {
           <Route exact path="/" ><Redirect to="/sign" /></Route>
           <Route path='/sign' component={() => <SignIn />} />
           <Route path='/mode' component={() => <ModePick setWords={setWords} setModePicked={setModePicked} />} />
-          <Route path='/main' component={() => <Main score={score} setScore={setScore} modePicked={modePicked} gameStatus={gameStatus} words={words} />} />
+          <Route path='/main' component={() => <Main modePicked={modePicked} gameStatus={gameStatus} words={words} />} />
         </ThemeProvider>
       </UserContext.Provider>
     </Router>

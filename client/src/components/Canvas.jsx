@@ -1,13 +1,16 @@
 import { Button } from '@material-ui/core';
 import React, { useRef, useEffect, useState, useContext } from 'react';
-import { TwitterPicker, HuePicker } from 'react-color'
+import { TwitterPicker } from 'react-color'
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useWindowSize } from '@react-hook/window-size';
 import { UserContext } from '../context/UserContext';
 import { socket } from '../socket/Socket'
 import { useHistory } from 'react-router-dom';
+import AddIcon from '@material-ui/icons/Add';
+import BackupIcon from '@material-ui/icons/Backup';
 
-function Canvas({ changeWord, setChangeWord }) {
+
+const Canvas = ({ changeWord, setChangeWord }) => {
 
     const canvasRef = useRef(null);
     const contextRef = useRef(null);
@@ -52,6 +55,10 @@ function Canvas({ changeWord, setChangeWord }) {
             if (!contextRef.current) return;
             contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         })
+        socket.on('mode picked', () => {
+            if (!contextRef.current) return;
+            contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        })
     }, [])
 
     const startDrawing = (e) => {
@@ -86,7 +93,6 @@ function Canvas({ changeWord, setChangeWord }) {
         socket.emit('clear');
     }
 
-
     return (
         <>
             <div className="canvas" style={{ marginBottom: "20px" }}>
@@ -99,10 +105,10 @@ function Canvas({ changeWord, setChangeWord }) {
             </div>
             {role === "draw" ? <> <TwitterPicker color={color} onChange={setColor} />
                 <div className="gameButtons">
-
                     <Button
                         variant="contained"
                         color="secondary"
+                        startIcon={<AddIcon />}
                         style={{ marginTop: "20px" }}
                         onClick={() => setChangeWord(!changeWord)}
                     >
@@ -124,8 +130,16 @@ function Canvas({ changeWord, setChangeWord }) {
                         style={{ marginTop: "20px" }}
                         onClick={() => history.push('/mode')}
                     >
-                        Change Mode
+                        New Game
                     </Button>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        startIcon={<BackupIcon />}
+                        style={{ marginTop: "20px" }}
+                    >
+                        Submit Your Score
+                 </Button>
                 </div> </>
                 : ""}
         </>
