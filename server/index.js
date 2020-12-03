@@ -28,7 +28,7 @@ io.on('connection', socket => {
         } catch (error) { console.log(error) };
     })
 
-    socket.on('mode picked', () => { io.emit('mode picked'); });
+    socket.on('mode picked', () => { socket.broadcast.emit('mode picked'); });
 
     socket.on('signed', () => {
         activePlayers++;
@@ -51,10 +51,10 @@ io.on('connection', socket => {
     });
     // -------------- Canvas Events ----------------
 
-    socket.on('start draw', data => { setTimeout(() => { socket.broadcast.emit('start draw', data) }, 1500); });
-    socket.on('draw', (data) => { setTimeout(() => { socket.broadcast.emit('draw', data) }, 1500); });
-    socket.on('finish draw', () => { setTimeout(() => { socket.broadcast.emit('finish draw',) }, 1500); });
-    socket.on('clear', () => { setTimeout(() => { socket.broadcast.emit('clear') }, 1500); });
+    socket.on('start draw', data => { setTimeout(() => { socket.broadcast.emit('start draw', data) }, 1000); });
+    socket.on('draw', (data) => { setTimeout(() => { socket.broadcast.emit('draw', data) }, 1000); });
+    socket.on('finish draw', () => { setTimeout(() => { socket.broadcast.emit('finish draw',) }, 1000); });
+    socket.on('clear', () => { setTimeout(() => { socket.broadcast.emit('clear') }, 1000); });
 })
 
 const PORT = 4000 || process.env.PORT;

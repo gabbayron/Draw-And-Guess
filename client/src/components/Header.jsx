@@ -74,44 +74,11 @@ export default function Header({ gameStatus }) {
     return (
         <div className={classes.root + "header"}>
             <AppBar color="secondary" position="static">
-                <Toolbar>{gameStatus ? <>
-                    <Button
-                        aria-controls="customized-menu"
-                        aria-haspopup="true"
-                        variant="contained"
-                        disableElevation
-                        color="secondary"
-                        onClick={handleClick}
-                        size="large"
-                        style={{ marginTop: "3px" }}
-                    >
-                        <MenuIcon />
-                    </Button>
-                    <StyledMenu
-                        id="customized-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                    >
-
-                        <StyledMenuItem>
-                            <ListItemIcon>
-                                <DraftsIcon fontSize="small" />
-                            </ListItemIcon>
-                            <ListItemText primary="Log Out" />
-                        </StyledMenuItem>
-                        <StyledMenuItem>
-                            <ListItemIcon>
-                                <InboxIcon fontSize="small" />
-                            </ListItemIcon>
-                            <ListItemText primary="New Game" />
-                        </StyledMenuItem>
-                    </StyledMenu> </> : ""}
+                <Toolbar>
                     <Typography variant="h6" className={classes.title}>
                         Draw & Guess
                     </Typography>
-                    <Typography style={{ marginTop: "3px" }} variant="h6" className={classes.title}>
+                    <Typography variant="h6" className={classes.title}>
                         {gameStatus ? `Hello ${nickName}` : ""}
                     </Typography>
                 </Toolbar>

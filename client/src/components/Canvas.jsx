@@ -8,7 +8,7 @@ import { socket } from '../socket/Socket'
 import { useHistory } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
 import BackupIcon from '@material-ui/icons/Backup';
-
+import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 
 const Canvas = ({ changeWord, setChangeWord }) => {
 
@@ -127,6 +127,7 @@ const Canvas = ({ changeWord, setChangeWord }) => {
                     <Button
                         variant="contained"
                         color="secondary"
+                        startIcon={<SportsEsportsIcon />}
                         style={{ marginTop: "20px" }}
                         onClick={() => history.push('/mode')}
                     >

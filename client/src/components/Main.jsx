@@ -50,10 +50,7 @@ const Main = ({ gameStatus, modePicked, words, }) => {
             setScore(score);
         })
         socket.on('mode picked', () => setScore(0))
-        return () => {
-            socket.off('right answer');
-            socket.off('mode picked');
-        }
+        return () => { socket.off('right answer'); }
     }, [])
 
     const handleGuess = () => { socket.emit('check answer', guess.toLocaleLowerCase()); }
