@@ -8,13 +8,13 @@ import { Button } from '@material-ui/core';
 import { socket } from '../socket/Socket'
 
 const Main = ({ gameStatus, modePicked, words, }) => {
-    const { role } = useContext(UserContext);
+    const { role, nickName } = useContext(UserContext);
     const [word, setWord] = useState('');
     const [changeWord, setChangeWord] = useState(false);
     const [guess, setGuess] = useState('');
     const [difficulty, setDifficulty] = useState('');
     const [score, setScore] = useState(0);
-
+    const [secondUser, setSecondUser] = useState('')
     useEffect(() => {
         // Generate random word
         if (role === "draw") {
@@ -24,8 +24,8 @@ const Main = ({ gameStatus, modePicked, words, }) => {
         }
     }, [changeWord])
     useEffect(() => {
-        socket.on('check answer', guess => {
-            if (guess === word.toLocaleLowerCase()) {
+        socket.on('check answer', data => {
+            if (data.guess === word.toLocaleLowerCase()) {
                 if (difficulty === "easy") {
                     setScore(score + 1);
                     socket.emit('right answer', score + 1);
@@ -39,6 +39,7 @@ const Main = ({ gameStatus, modePicked, words, }) => {
                     setScore(score + 5);
                 }
                 setChangeWord(prevState => !prevState);
+                setSecondUser(data.nickName)
             }
         })
         return () => { socket.off('check answer'); }
@@ -53,14 +54,14 @@ const Main = ({ gameStatus, modePicked, words, }) => {
         return () => { socket.off('right answer'); }
     }, [])
 
-    const handleGuess = () => { socket.emit('check answer', guess.toLocaleLowerCase()); }
+    const handleGuess = () => { socket.emit('check answer', { guess: (guess.toLocaleLowerCase()), nickName }); }
 
     return (
         <div className="content">
             {gameStatus && modePicked ? <>
                 {role === "draw" ? <h2>Draw - {word}</h2> : ""}
                 <h3>Score : {score}</h3>
-                <Canvas changeWord={changeWord} setChangeWord={setChangeWord} /> </> :
+                <Canvas user2={secondUser} score={score} changeWord={changeWord} setChangeWord={setChangeWord} /> </> :
                 <><AccessTimeIcon fontSize="large" />
                     <Typography paragraph align="center" variant="h2" >
                         Waiting For 2nd Player...
@@ -72,7 +73,7 @@ const Main = ({ gameStatus, modePicked, words, }) => {
                     id="standard-basic"
                     label="Place Your Guess Here !" />
                 <Button
-                    onClick={() => handleGuess()}
+                    onClick={handleGuess}
                     variant="contained"
                     color="secondary"
                     style={{ marginTop: "20px" }}

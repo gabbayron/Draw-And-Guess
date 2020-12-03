@@ -11,7 +11,7 @@ import BackupIcon from '@material-ui/icons/Backup';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import Tooltip from '@material-ui/core/Tooltip';
 
-const Canvas = ({ changeWord, setChangeWord }) => {
+const Canvas = ({ changeWord, setChangeWord, score, user2 }) => {
 
     const canvasRef = useRef(null);
     const contextRef = useRef(null);
@@ -90,6 +90,7 @@ const Canvas = ({ changeWord, setChangeWord }) => {
         setIsDrawing(false);
         socket.emit('finish draw');
     };
+    
     const clear = () => {
         contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         socket.emit('clear');
@@ -99,15 +100,17 @@ const Canvas = ({ changeWord, setChangeWord }) => {
         setOpen(true);
         setTimeout(() => { setOpen(false) }, 1500);
     };
+
     const submitScore = async () => {
+        if (score === 0) return;
         handleTooltipOpen()
-        let rest = await fetch('http://localhost:4000/scores', {
+        let res = await fetch('http://localhost:4000/scores', {
             method: 'POST',
-            body: JSON.stringify({ user1: nickName, user2: 'test', score: '15' }),
+            body: JSON.stringify({ user1: nickName, user2, score }),
             headers: { "content-type": "application/json" }
         })
-        console.log(rest)
     };
+
     return (
         <>
             <div className="canvas" style={{ marginBottom: "20px" }}>

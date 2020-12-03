@@ -58,7 +58,7 @@ io.on('connection', socket => {
         console.log('signed!');
     });
 
-    socket.on('check answer', (guess) => { socket.broadcast.emit('check answer', guess) });
+    socket.on('check answer', data => { socket.broadcast.emit('check answer', data) });
     socket.on('right answer', score => socket.broadcast.emit('right answer', score));
 
     socket.emit('connection', { role: io.engine.clientsCount === 1 ? "draw" : "guess" });
