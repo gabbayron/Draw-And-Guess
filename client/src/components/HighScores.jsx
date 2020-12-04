@@ -21,14 +21,13 @@ const useStyles = makeStyles({
 
 function SimpleDialog(props) {
 
-    const [highScores, setHighScores] = useState([])
+    const [highScores, setHighScores] = useState([]);
 
     useEffect(() => {
         (async () => {
             let res = await fetch('http://localhost:4000/scores');
             let scores = await res.json();
-            setHighScores(scores)
-            console.log(scores);
+            setHighScores(scores);
         })();
     }, []);
     const classes = useStyles();

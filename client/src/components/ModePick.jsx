@@ -7,7 +7,7 @@ import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfie
 import { useHistory } from 'react-router-dom';
 import { socket } from '../socket/Socket'
 
-const ModePick = ({ setModePicked, setWords}) => {
+const ModePick = ({ setModePicked, setWords, score }) => {
     const [mode, setMode] = useState('');
     const isFirstRender = useRef(true);
     const history = useHistory();
@@ -18,7 +18,7 @@ const ModePick = ({ setModePicked, setWords}) => {
             try {
                 let res = await fetch('http://localhost:4000/words/' + mode);
                 let data = await res.json();
-                socket.emit('mode picked');
+                socket.emit('mode picked',score);
                 setModePicked(true);
                 setWords(data);
                 history.push('/main');

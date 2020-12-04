@@ -23,6 +23,7 @@ const Main = ({ gameStatus, modePicked, words, }) => {
             setDifficulty(words[index].mode);
         }
     }, [changeWord])
+    
     useEffect(() => {
         socket.on('check answer', data => {
             if (data.guess === word.toLocaleLowerCase()) {

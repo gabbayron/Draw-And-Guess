@@ -12,7 +12,8 @@ app.use(cors())
 
 app.use(morgan('tiny'))
 let activePlayers = 0
-
+let roleCounter = 0
+let connectionsLimit = 2
 app.get('/words/:mode', async (req, res) => {
     try {
         let q = `SELECT * FROM words WHERE mode = ?`;
@@ -35,16 +36,15 @@ app.get('/scores', async (req, res) => {
 
 
 io.on('connection', socket => {
-    console.log('connection')
-    // if (io.engine.clientsCount > connectionsLimit) {
-    //     socket.emit('err', { message: 'reach the limit of connections' })
-    //     console.log('max users allowed')  
-    //     socket.disconnect()      
-    //     console.log('Disconnected...')   
-    //     return       
-    // }            
-
-
+    if (io.engine.clientsCount > connectionsLimit) {
+        socket.emit('err', { message: 'reach the limit of connections' })
+        console.log('max users allowed')   
+        socket.disconnect()
+        console.log('Disconnected...')
+        return;
+    };
+    console.log(io.engine.clientsCount)
+    roleCounter === 0 ? roleCounter = 1 : roleCounter = 0
 
     socket.on('mode picked', () => { socket.broadcast.emit('mode picked'); });
 
@@ -60,13 +60,13 @@ io.on('connection', socket => {
 
     socket.on('check answer', data => { socket.broadcast.emit('check answer', data) });
     socket.on('right answer', score => socket.broadcast.emit('right answer', score));
+    socket.emit('connection', { role: roleCounter === 1 ? "draw" : "guess" });
 
-    socket.emit('connection', { role: io.engine.clientsCount === 1 ? "draw" : "guess" });
     socket.on('disconnect', () => {
-        activePlayers--;
-        console.log('active ', activePlayers);
+        if (activePlayers > 0) activePlayers--;
         console.log('user disconnected');
     });
+
     // -------------- Canvas Events ----------------
 
     socket.on('start draw', data => { setTimeout(() => { socket.broadcast.emit('start draw', data) }, 1000); });

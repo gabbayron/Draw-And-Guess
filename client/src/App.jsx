@@ -28,10 +28,8 @@ function App() {
   });
 
   useEffect(() => {
-    socket.on('connection', msg => {
-      console.log(msg);
-      setRole(msg.role);
-    })
+    socket.on('connection', data =>{ setRole(data.role) 
+       console.log(data.role)})
     socket.on('game full', () => {
       setGameStatus(true);
     })
@@ -46,7 +44,7 @@ function App() {
   const [gameStatus, setGameStatus] = useState(false);
   const [modePicked, setModePicked] = useState(false);
   const [words, setWords] = useState([]);
-  
+
   return (
     <Router>
       <UserContext.Provider value={{ fullName, nickName, setFullName, setNickName, role }}>

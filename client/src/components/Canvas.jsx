@@ -90,7 +90,7 @@ const Canvas = ({ changeWord, setChangeWord, score, user2 }) => {
         setIsDrawing(false);
         socket.emit('finish draw');
     };
-    
+
     const clear = () => {
         contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         socket.emit('clear');
@@ -104,7 +104,7 @@ const Canvas = ({ changeWord, setChangeWord, score, user2 }) => {
     const submitScore = async () => {
         if (score === 0) return;
         handleTooltipOpen()
-        let res = await fetch('http://localhost:4000/scores', {
+         await fetch('http://localhost:4000/scores', {
             method: 'POST',
             body: JSON.stringify({ user1: nickName, user2, score }),
             headers: { "content-type": "application/json" }
