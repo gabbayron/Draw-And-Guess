@@ -13,6 +13,7 @@ import Main from './components/Main';
 import { UserContext } from './context/UserContext'
 import ModePick from './components/ModePick';
 import { socket } from './socket/Socket'
+import EndGame from './components/EndGame';
 
 function App() {
 
@@ -28,8 +29,7 @@ function App() {
   });
 
   useEffect(() => {
-    socket.on('connection', data =>{ setRole(data.role) 
-       console.log(data.role)})
+    socket.on('connection', data => { setRole(data.role) })
     socket.on('game full', () => {
       setGameStatus(true);
     })
@@ -55,6 +55,7 @@ function App() {
           <Route path='/sign' component={() => <SignIn />} />
           <Route path='/mode' component={() => <ModePick setWords={setWords} setModePicked={setModePicked} />} />
           <Route path='/main' component={() => <Main modePicked={modePicked} gameStatus={gameStatus} words={words} />} />
+          <Route path='/end' component={EndGame} />
         </ThemeProvider>
       </UserContext.Provider>
     </Router>

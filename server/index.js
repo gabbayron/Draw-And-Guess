@@ -23,17 +23,8 @@ io.on('connection', socket => {
     socket.on('signed', () => {
         activePlayers++;
         if (activePlayers === 2) {
-            console.log('game full');
             io.sockets.emit('game full');
         }
-        console.log('signed!');
-        if (activePlayers === 3) {
-            socket.emit('err', { message: 'reach the limit of connections' })
-            console.log('max users allowed')
-            socket.disconnect()
-            console.log('Disconnected...')
-            return;
-        };
     });
 
 

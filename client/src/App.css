@@ -29,7 +29,7 @@ code {
     margin : 6% 0;
   }
 
-  .waiting{
+  .waiting , .endContent{
     height: 85vh;
     display: flex;
     flex-direction: column;
@@ -64,4 +64,8 @@ code {
 
   .highScores {
     text-align: center;
+  }
+
+  .endGame{
+    background: #da0a0a !important;
   }

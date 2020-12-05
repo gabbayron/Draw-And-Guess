@@ -10,6 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 import BackupIcon from '@material-ui/icons/Backup';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import Tooltip from '@material-ui/core/Tooltip';
+import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import { URL_ENDPOINT } from '../URL.ENDPOINT'
 
 const Canvas = ({ changeWord, setChangeWord, score, user2 }) => {
@@ -58,7 +59,6 @@ const Canvas = ({ changeWord, setChangeWord, score, user2 }) => {
         })
         socket.on('right answer', () => {
             if (!contextRef.current) return;
-            console.log('right')
             contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         })
         socket.on('mode picked', () => {
@@ -155,6 +155,15 @@ const Canvas = ({ changeWord, setChangeWord, score, user2 }) => {
                     >
                         New Game
                     </Button>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        startIcon={<BackupIcon />}
+                        style={{ marginTop: "20px" }}
+                        onClick={submitScore}
+                    >
+                        Submit Your Score
+                    </Button>
                     <Tooltip
                         PopperProps={{
                             disablePortal: true,
@@ -169,11 +178,12 @@ const Canvas = ({ changeWord, setChangeWord, score, user2 }) => {
                         <Button
                             variant="contained"
                             color="secondary"
-                            startIcon={<BackupIcon />}
+                            className="endGame"
+                            startIcon={<SentimentVeryDissatisfiedIcon />}
                             style={{ marginTop: "20px" }}
-                            onClick={submitScore}
+                            onClick={() => history.push('/end')}
                         >
-                            Submit Your Score
+                            End Game
                     </Button>
                     </Tooltip>
                 </div> </>
