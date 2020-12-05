@@ -1,2 +1,3 @@
 import io from 'socket.io-client'
-export const socket = io('http://localhost:4000');
+import {URL_ENDPOINT} from '../URL.ENDPOINT'
+export const socket = io(URL_ENDPOINT);

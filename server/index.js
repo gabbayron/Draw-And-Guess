@@ -1,7 +1,6 @@
 const express = require('express')
 const app = express();
 const http = require('http').createServer(app);
-const Query = require('./db');
 const cors = require('cors');
 const morgan = require('morgan');
 const io = require('socket.io')(http, { cors: { origin: "*" } });

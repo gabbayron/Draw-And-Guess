@@ -22,7 +22,7 @@ const Canvas = ({ changeWord, setChangeWord, score, user2 }) => {
     const [winWidth, winHeight] = useWindowSize();
     const { role, nickName } = useContext(UserContext);
     const history = useHistory();
-    const canvasHeightRatio = 0.7
+    const canvasHeightRatio = 0.6
     const canvasWidthRatio = 0.9
 
     useEffect(() => {
