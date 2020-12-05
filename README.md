@@ -2,8 +2,8 @@
 
 ### Game Rules
 * 2 players 
-* 1 Player draw a random word - while the 2nd player needs to guess. 
-* First player to join the game - will draw, and the will guess. 
+* 1 Player draw a random word - while the second player needs to guess. 
+* First player to join the game - will draw a random given word, and the other will try to guess that word. 
 
 ### Created with :
 

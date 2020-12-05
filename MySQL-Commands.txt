@@ -1,0 +1,30 @@
+CREATE DATABASE words_db;
+USE words_db;
+
+CREATE TABLE words(
+	id int auto_increment,
+    word varchar (255) not null,
+    mode varchar (255) not null,
+    primary key(id)
+);
+
+CREATE TABLE games (
+	id int auto_increment,
+    score int not null,
+    user1 varchar (255),
+    user2 varchar (255),
+    primary key(id)
+);
+
+INSERT INTO words (word,mode)
+VALUES 
+("Banana", "easy"), ("Dog","easy"), ("Eyes","easy"),("Happy","easy"),("Sad","easy"),("Window","easy"),("Cookie","easy"),("Stairs","easy"),("Cloud","easy"),
+("Beautiful","hard"), ("Calendar","normal"), ("Watermelon","normal"), ("Cucumber","normal"), ("Ship","normal"),("Calculator","normal"),("Backpack","normal"),
+("Helicopter","normal"),("Microwave","hard"),("Database","hard"),("Skyline","hard"),("Toaster","hard"),("Snowflake","hard"),("Dresser","hard"),("Bulldozer","hard"),
+("Glasses","easy"),("Flower","easy"),("Lightning","easy"),("Sun","easy"),("Moon","easy"),("Star","easy"),("House","easy"),("Door","easy"),("Rain","easy"),
+("Pants","easy"),("Rainbow","easy"),
+("Car","normal"),("Backpack","normal"),("Dog","normal"),("Wheel","normal"),("Tree","normal"),("Beard","normal"),("Building","normal"),
+("Flag","normal"),("Train","normal"),("Apple","normal"),("Scissors","normal"),("Leg","normal"),
+("Plant","hard"),("Bear","hard"),("Submarine","hard"),("Radio","hard"),("Traffic","hard"),("Waterfall","hard"),("Taxi","hard"),("Toilet","hard"),("Dinosaur","hard"),
+("Swing","hard"),("Robot","hard"),("Lion","hard"),("Guitar","hard"),("Trumpet","hard"),("Umbrella","easy"),
+("Drums","normal"),("Piano","normal");

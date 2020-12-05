@@ -69,7 +69,7 @@ const Main = ({ gameStatus, modePicked, words, }) => {
             {gameStatus && modePicked ?
                 <>
                     {role === "draw" ? <h2>Draw - {word}</h2> : ""}
-                    <h3 style={{marginBottom:"10px"}}>Score : {score}</h3>
+                    <h3 style={{ marginBottom: "10px" }}>Score : {score}</h3>
                     <Canvas user2={secondUser} score={score} changeWord={changeWord} setChangeWord={setChangeWord} />
                 </> :
                 <div className="waiting">
