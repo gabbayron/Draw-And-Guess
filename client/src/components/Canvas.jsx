@@ -22,11 +22,13 @@ const Canvas = ({ changeWord, setChangeWord, score, user2 }) => {
     const [winWidth, winHeight] = useWindowSize();
     const { role, nickName } = useContext(UserContext);
     const history = useHistory();
+    const canvasHeightRatio = 0.7
+    const canvasWidthRatio = 0.9
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        canvas.height = winHeight * 0.4;
-        canvas.width = winWidth * 0.9;
+        canvas.height = winHeight * canvasHeightRatio;
+        canvas.width = winWidth * canvasWidthRatio;
         const context = canvas.getContext("2d");
         context.scale(1, 1);
         context.lineCap = "round";

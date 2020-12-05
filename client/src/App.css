@@ -26,8 +26,15 @@ code {
   }
 
   .content{
-    height: 80%;
     margin : 6% 0;
+  }
+
+  .waiting{
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
   }
 
   .levelButtons {

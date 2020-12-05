@@ -23,7 +23,7 @@ const Main = ({ gameStatus, modePicked, words, }) => {
             setDifficulty(words[index].mode);
         }
     }, [changeWord])
-    
+
     useEffect(() => {
         socket.on('check answer', data => {
             if (data.guess === word.toLocaleLowerCase()) {
@@ -59,14 +59,18 @@ const Main = ({ gameStatus, modePicked, words, }) => {
 
     return (
         <div className="content">
-            {gameStatus && modePicked ? <>
-                {role === "draw" ? <h2>Draw - {word}</h2> : ""}
-                <h3>Score : {score}</h3>
-                <Canvas user2={secondUser} score={score} changeWord={changeWord} setChangeWord={setChangeWord} /> </> :
-                <><AccessTimeIcon fontSize="large" />
+            {gameStatus && modePicked ?
+                <>
+                    {role === "draw" ? <h2>Draw - {word}</h2> : ""}
+                    <h3>Score : {score}</h3>
+                    <Canvas user2={secondUser} score={score} changeWord={changeWord} setChangeWord={setChangeWord} />
+                </> :
+                <div className="waiting">
+                    <AccessTimeIcon fontSize="large" />
                     <Typography paragraph align="center" variant="h2" >
                         Waiting For 2nd Player...
-                 </Typography><AccessTimeIcon fontSize="large" /> </>}
+                 </Typography><AccessTimeIcon fontSize="large" />
+                </div>}
             {role === "guess" && gameStatus && modePicked ? <>
                 <TextField
                     onChange={e => setGuess(e.target.value)}
