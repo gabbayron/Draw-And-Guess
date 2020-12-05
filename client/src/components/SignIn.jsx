@@ -53,7 +53,7 @@ export default function SignIn() {
         socket.emit('signed');
         if (role === "draw") { history.push('/mode'); }
         else { history.push('/main'); }
-    }
+    };
 
 
     return (<div className="landingPage">
@@ -136,4 +136,4 @@ export default function SignIn() {
         </Container>
     </div>
     );
-}
+};

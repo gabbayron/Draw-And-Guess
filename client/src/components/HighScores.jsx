@@ -56,7 +56,7 @@ function SimpleDialog(props) {
             </List>
         </Dialog>
     );
-}
+};
 
 SimpleDialog.propTypes = {
     onClose: PropTypes.func.isRequired,
@@ -82,5 +82,5 @@ export default function SimpleDialogDemo() {
             <SimpleDialog  open={open} onClose={handleClose} />
         </div>
     );
-}
+};
 

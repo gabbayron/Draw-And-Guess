@@ -29,6 +29,6 @@ const EndGame = () => {
             </Typography>
         </div>
     );
-}
+};
 
 export default EndGame;

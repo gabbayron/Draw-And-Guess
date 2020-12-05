@@ -1,14 +1,15 @@
-## Draw && Guess
+# Draw && Guess
 
 ### Game Rules
 * 2 players 
-1 Player draw a random word - while the 2nd player needs to guess.
+* 1 Player draw a random word - while the 2nd player needs to guess. 
+* First player to join the game - will draw, and the will guess. 
 
-Created with :
+### Created with :
 
-Client - React
-Server - NodeJS + Socket.IO
-Database - MySQL
+* Client - React
+* Server - NodeJS + Socket.IO
+* Database - MySQL
 
 ### Run This Project Locally :
 #### Server

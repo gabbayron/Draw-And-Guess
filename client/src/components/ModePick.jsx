@@ -25,7 +25,7 @@ const ModePick = ({ setModePicked, setWords, score }) => {
                 history.push('/main');
             } catch (error) { throw error }
         })()
-    }, [mode])
+    }, [mode]);
 
     return (
         <div className="modePick">
@@ -81,6 +81,6 @@ const ModePick = ({ setModePicked, setWords, score }) => {
             </div>
         </div>
     );
-}
+};
 
 export default ModePick;
