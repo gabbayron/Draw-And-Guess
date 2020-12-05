@@ -55,6 +55,7 @@ const Canvas = ({ changeWord, setChangeWord, score, user2 }) => {
         })
         socket.on('right answer', () => {
             if (!contextRef.current) return;
+            console.log('right')
             contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         })
         socket.on('mode picked', () => {
