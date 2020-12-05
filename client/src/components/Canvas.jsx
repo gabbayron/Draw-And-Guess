@@ -115,6 +115,11 @@ const Canvas = ({ changeWord, setChangeWord, score, user2 }) => {
         })
     };
 
+    const endGame = () => {
+        history.push('/end');
+        socket.emit('end game')
+    }
+
     return (
         <>
             <div className="canvas" style={{ marginBottom: "20px" }}>
@@ -181,7 +186,7 @@ const Canvas = ({ changeWord, setChangeWord, score, user2 }) => {
                             className="endGame"
                             startIcon={<SentimentVeryDissatisfiedIcon />}
                             style={{ marginTop: "20px" }}
-                            onClick={() => history.push('/end')}
+                            onClick={endGame}
                         >
                             End Game
                     </Button>

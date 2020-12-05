@@ -6,6 +6,7 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
 import { socket } from '../socket/Socket'
+import { useHistory } from 'react-router-dom';
 
 const Main = ({ gameStatus, modePicked, words, }) => {
     const { role, nickName } = useContext(UserContext);
@@ -15,6 +16,8 @@ const Main = ({ gameStatus, modePicked, words, }) => {
     const [difficulty, setDifficulty] = useState('');
     const [score, setScore] = useState(0);
     const [secondUser, setSecondUser] = useState('')
+    const history = useHistory()
+
     useEffect(() => {
         // Generate random word
         if (role === "draw") {
@@ -43,7 +46,11 @@ const Main = ({ gameStatus, modePicked, words, }) => {
                 setSecondUser(data.nickName)
             }
         })
-        return () => { socket.off('check answer'); }
+        socket.on('end game', () => history.push('/end'))
+        return () => {
+            socket.off('check answer');
+            socket.off('end game');
+        }
     }, [word])
 
     useEffect(() => {

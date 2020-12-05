@@ -25,7 +25,7 @@ const EndGame = () => {
                 variant="h6"
                 align="center"
                 color="textPrimary">
-                For new game - refresh your browser
+                For a new game - refresh your browser
             </Typography>
         </div>
     );

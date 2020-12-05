@@ -5,7 +5,6 @@ const cors = require('cors');
 const morgan = require('morgan');
 const io = require('socket.io')(http, { cors: { origin: "*" } });
 
-
 app.use(express.json())
 app.use(cors())
 app.use(morgan('tiny'))
@@ -27,17 +26,13 @@ io.on('connection', socket => {
         }
     });
 
-
     socket.on('check answer', data => { socket.broadcast.emit('check answer', data) });
     socket.on('right answer', score => io.sockets.emit('right answer', score));
     socket.emit('connection', { role: roleCounter ? "draw" : "guess" });
-
-    socket.on('disconnect', () => {
-        if (activePlayers > 0) activePlayers--;
-    });
+    socket.on('end game', () => socket.broadcast.emit('end game'))
+    socket.on('disconnect', () => { if (activePlayers > 0) activePlayers--; });
 
     // -------------- Canvas Events ----------------
-
     socket.on('start draw', data => { setTimeout(() => { socket.broadcast.emit('start draw', data) }, 1000); });
     socket.on('draw', (data) => { setTimeout(() => { socket.broadcast.emit('draw', data) }, 1000); });
     socket.on('finish draw', () => { setTimeout(() => { socket.broadcast.emit('finish draw',) }, 1000); });
