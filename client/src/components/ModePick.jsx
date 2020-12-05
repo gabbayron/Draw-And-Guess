@@ -6,6 +6,7 @@ import WarningIcon from '@material-ui/icons/Warning';
 import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
 import { useHistory } from 'react-router-dom';
 import { socket } from '../socket/Socket'
+import { URL_ENDPOINT } from '../URL.ENDPOINT'
 
 const ModePick = ({ setModePicked, setWords, score }) => {
     const [mode, setMode] = useState('');
@@ -16,9 +17,9 @@ const ModePick = ({ setModePicked, setWords, score }) => {
         if (isFirstRender.current) { return isFirstRender.current = false }
         (async () => {
             try {
-                let res = await fetch('http://localhost:4000/words/' + mode);
+                let res = await fetch(`${URL_ENDPOINT}/words/${mode}`);
                 let data = await res.json();
-                socket.emit('mode picked',score);
+                socket.emit('mode picked', score);
                 setModePicked(true);
                 setWords(data);
                 history.push('/main');

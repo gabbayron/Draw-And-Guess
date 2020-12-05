@@ -15,8 +15,6 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import { socket } from '../socket/Socket'
 import HighScores from './HighScores';
 
-
-
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">

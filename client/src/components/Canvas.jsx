@@ -10,6 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 import BackupIcon from '@material-ui/icons/Backup';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import Tooltip from '@material-ui/core/Tooltip';
+import { URL_ENDPOINT } from '../URL.ENDPOINT'
 
 const Canvas = ({ changeWord, setChangeWord, score, user2 }) => {
 
@@ -105,7 +106,7 @@ const Canvas = ({ changeWord, setChangeWord, score, user2 }) => {
     const submitScore = async () => {
         if (score === 0) return;
         handleTooltipOpen()
-         await fetch('http://localhost:4000/scores', {
+        await fetch(`${URL_ENDPOINT}/scores`, {
             method: 'POST',
             body: JSON.stringify({ user1: nickName, user2, score }),
             headers: { "content-type": "application/json" }

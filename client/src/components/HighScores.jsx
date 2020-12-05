@@ -11,6 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import PersonIcon from '@material-ui/icons/Person';
 import { blue } from '@material-ui/core/colors';
+import { URL_ENDPOINT } from '../URL.ENDPOINT'
 
 const useStyles = makeStyles({
     avatar: {
@@ -25,7 +26,7 @@ function SimpleDialog(props) {
 
     useEffect(() => {
         (async () => {
-            let res = await fetch('http://localhost:4000/scores');
+            let res = await fetch(`${URL_ENDPOINT}/scores`);
             let scores = await res.json();
             setHighScores(scores);
         })();
