@@ -1,4 +1,4 @@
-# Draw && Guess
+# Draw & Guess
 
 ### Game Rules
 * 2 players 
